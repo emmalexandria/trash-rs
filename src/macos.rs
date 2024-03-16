@@ -87,6 +87,13 @@ impl TrashContext {
     }
 }
 
+pub fn list() -> Result<Vec<TrashItem>> {
+    let file_mgr_cls = class!(NSFileManager);
+
+    file_mgr: id = unsafe{msg_send![file_mgr_cls, defaultManager]};
+    let files = unsafe {msg_send![file_mgr_cls, URLsForDirectory:inDomains:102]}
+}
+
 fn delete_using_file_mgr(full_paths: Vec<String>) -> Result<(), Error> {
     trace!("Starting delete_using_file_mgr");
     let url_cls = class!(NSURL);
